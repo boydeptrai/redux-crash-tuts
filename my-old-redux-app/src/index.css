@@ -1,0 +1,14 @@
+.navbar {
+  padding: 5px;
+  text-align: center;
+  background: rgb(240, 240, 240);
+  color: black;
+ }
+ 
+ .navbar ul {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+ }
