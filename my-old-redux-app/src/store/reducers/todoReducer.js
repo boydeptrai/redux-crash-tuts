@@ -19,7 +19,19 @@ const initialState = {
 }
 
 const todoReducer = (state = initialState, action) =>{
-    return state
+    switch (action.type) {
+        case 'MARK_COMPLETE':
+            return {
+                ...state,
+                todos: state.todos.map((todo) =>{
+                    if (todo.id === action.payload) todo.completed = !todo.completed
+                    return todo
+                })
+            }
+    
+        default:
+            return state;
+    }
 }
 
 export default todoReducer
