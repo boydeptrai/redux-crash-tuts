@@ -4,11 +4,11 @@ const initialState = {
 
 const todoReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_TODOS':
+    case "GET_TODOS":
       return {
         ...state,
-        todos: action.payload
-      }
+        todos: action.payload,
+      };
     case "MARK_COMPLETE":
       return {
         ...state,
@@ -17,12 +17,18 @@ const todoReducer = (state = initialState, action) => {
           return todo;
         }),
       };
-    
+
     case "ADD_TODO":
-        return {
-            ...state,
-            todos: [...state.todos, action.payload]
-        }
+      return {
+        ...state,
+        todos: [...state.todos, action.payload],
+      };
+
+    case "DELETE_TODO":
+      return {
+        ...state,
+        todos: state.todos.filter((todo) => todo.id !== action.payload),
+      };
     default:
       return state;
   }

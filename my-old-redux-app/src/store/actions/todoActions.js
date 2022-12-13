@@ -30,3 +30,15 @@ export const addTodo = newTodo => async dispatch => {
         console.log(error)
     }
 }
+
+export const deleteTodo = id => async dispatch =>{
+    try {
+        await axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+        dispatch({
+            type: 'DELETE_TODO',
+            payload: id
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
