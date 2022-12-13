@@ -1,15 +1,17 @@
+import { ADD_TODO, DELETE_TODO, GET_TODOS, MARK_COMPLETE } from "../types";
+
 const initialState = {
   todos: [],
 };
 
 const todoReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "GET_TODOS":
+    case GET_TODOS:
       return {
         ...state,
         todos: action.payload,
       };
-    case "MARK_COMPLETE":
+    case MARK_COMPLETE:
       return {
         ...state,
         todos: state.todos.map((todo) => {
@@ -18,13 +20,13 @@ const todoReducer = (state = initialState, action) => {
         }),
       };
 
-    case "ADD_TODO":
+    case ADD_TODO:
       return {
         ...state,
         todos: [...state.todos, action.payload],
       };
 
-    case "DELETE_TODO":
+    case DELETE_TODO:
       return {
         ...state,
         todos: state.todos.filter((todo) => todo.id !== action.payload),
