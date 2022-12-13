@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import  PropTypes  from "prop-types";
-import {connect} from 'react-redux'
-import { TodoForm } from "./TodoForm";
-import { markComplete } from "../store/actions/todoActions";
+import {connect} from 'react-redux';
+import { markComplete,getTodos } from "../store/actions/todoActions";
+import TodoForm from "./TodoForm";
 
-const Todos = ({todos,markComplete}) => {
-  
+const Todos = ({todos,markComplete,getTodos}) => {
+
+useEffect(() =>{
+  getTodos()
+// eslint-disable-next-line react-hooks/exhaustive-deps
+},[])
   return (
     <div className="todo-list">
     <TodoForm />
@@ -23,10 +27,11 @@ const Todos = ({todos,markComplete}) => {
 
 Todos.propTypes = {
    todos: PropTypes.array.isRequired,
-   markComplete: PropTypes.func.isRequired
+   markComplete: PropTypes.func.isRequired,
+   getTodos: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
   todos: state.myTodos.todos
 })
-export default connect(mapStateToProps,{markComplete})(Todos);
+export default connect(mapStateToProps,{markComplete,getTodos})(Todos);
