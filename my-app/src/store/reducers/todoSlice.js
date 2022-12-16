@@ -1,10 +1,22 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice, nanoid} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const getTodos = createAsyncThunk('todos/todosFetched', async () =>{
-    const response = await axios.get('http://jsonplaceholder.typicode.com/todos?_limit=5')
+    const response = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=5')
 
     return response.data
+});
+
+export const addTodos = createAsyncThunk('todos/addAdded', async title =>{
+    const newTodos = {
+        id: nanoid(),
+        title,
+        completed: false
+    }
+
+    await axios.post('https://jsonplaceholder.typicode.com/todos',newTodos)
+
+    return newTodos
 })
 const todosSlice = createSlice({
     name: 'todos',
@@ -21,6 +33,10 @@ const todosSlice = createSlice({
         },
         [getTodos.rejected]: (state,action) =>{
             console.log('Failed to get todos !!')
+        },
+
+        [addTodos.fulfilled]: (state,action) =>{
+            state.allTodos.unshift(action.payload)
         }
     }
 })
