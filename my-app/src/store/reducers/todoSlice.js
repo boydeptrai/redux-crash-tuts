@@ -18,6 +18,12 @@ export const addTodos = createAsyncThunk('todos/addAdded', async title =>{
 
     return newTodos
 })
+
+export const deleteTodo = createAsyncThunk('todos/todoDelete', async todoId =>{
+    await axios.delete(`https://jsonplaceholder.typicode.com/todos/${todoId}`)
+
+    return todoId
+})
 const todosSlice = createSlice({
     name: 'todos',
     initialState: {
@@ -46,6 +52,10 @@ const todosSlice = createSlice({
 
         [addTodos.fulfilled]: (state,action) =>{
             state.allTodos.unshift(action.payload)
+        },
+        [deleteTodo.fulfilled]: (state,action) =>{
+            const todoId = action.payload
+            state.allTodos = state.allTodos.filter(todo =>todo.id !== todoId)
         }
     }
 })
