@@ -1,9 +1,14 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { todosSelector } from '../store/reducers/todoSlice';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTodos, todosSelector } from '../store/reducers/todoSlice';
 
 const Todos = () => {
   const todos = useSelector(todosSelector)
+  const dispatch = useDispatch();
+
+  useEffect(() =>{
+    dispatch(getTodos())
+  },[dispatch])
   return (
     <div className='todo-list'>
        <ul>

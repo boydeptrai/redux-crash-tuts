@@ -1,24 +1,27 @@
-import {createSlice} from '@reduxjs/toolkit'
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import axios from 'axios';
+
+export const getTodos = createAsyncThunk('todos/todosFetched', async () =>{
+    const response = await axios.get('http://jsonplaceholder.typicode.com/todos?_limit=5')
+
+    return response.data
+})
 const todosSlice = createSlice({
     name: 'todos',
     initialState: {
-        allTodos: [
-            {
-                id: 1,
-                title: 'viec 1',
-                completed: false
-            },
-            {
-                id: 2,
-                title: 'viec 2',
-                completed: false
-            },
-            {
-                id: 3,
-                title: 'viec 3',
-                completed: false
-            },
-        ]
+        allTodos: []
+    },
+    reducers: {},
+    extraReducers:{
+        [getTodos.pending]: (state,action) =>{
+            console.log('Fetching data from backend..')
+        },
+        [getTodos.fulfilled]: (state,action) =>{
+            state.allTodos = action.payload
+        },
+        [getTodos.rejected]: (state,action) =>{
+            console.log('Failed to get todos !!')
+        }
     }
 })
 
