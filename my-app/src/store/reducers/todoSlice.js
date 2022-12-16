@@ -23,7 +23,16 @@ const todosSlice = createSlice({
     initialState: {
         allTodos: []
     },
-    reducers: {},
+    reducers: {
+        markComplete(state,action){
+          const todoId = action.payload;
+          state.allTodos = state.allTodos.map(todo =>{
+            if (todo.id === todoId) todo.completed = !todo.completed
+
+            return todo
+          })
+        }
+    },
     extraReducers:{
         [getTodos.pending]: (state,action) =>{
             console.log('Fetching data from backend..')
@@ -44,5 +53,7 @@ const todosSlice = createSlice({
 const todosReducer = todosSlice.reducer
 
 export const todosSelector = state =>state.todosReducer.allTodos
+
+export const {markComplete} = todosSlice.actions
 
 export default todosReducer
